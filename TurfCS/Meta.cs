@@ -32,12 +32,12 @@ namespace TurfCS
 				obj is Point)
 			{
 				var point = obj is Feature ? (Point)((Feature)obj).Geometry : (Point)obj;
-				var coords = (GeographicPosition)point.Coordinates;
+				var coords = (Position)point.Coordinates;
 				return new List<double>() { coords.Longitude, coords.Latitude };
 			}
-			else if (obj is GeographicPosition)
+			else if (obj is Position)
 			{
-				var coords = (GeographicPosition)obj;
+				var coords = (Position)obj;
 				return new List<double>() { coords.Longitude, coords.Latitude };
 			}
 			throw new Exception("A coordinate, feature, or point geometry is required");
@@ -60,9 +60,9 @@ namespace TurfCS
 		 */
 		static public void CoordEach(IGeoJSONObject layer, Action<List<double>> callback, bool excludeWrapCoord = false)
 		{
-			CoordEach(layer, (GeographicPosition obj) => { callback(GetCoord(obj)); }, excludeWrapCoord);
+			CoordEach(layer, (Position obj) => { callback(GetCoord(obj)); }, excludeWrapCoord);
 		}
-		static public void CoordEach(IGeoJSONObject layer, Action<GeographicPosition> callback, bool excludeWrapCoord = false)
+		static public void CoordEach(IGeoJSONObject layer, Action<Position> callback, bool excludeWrapCoord = false)
 		{
 			var isFeatureCollection = layer.Type == GeoJSONObjectType.FeatureCollection;
 			var isFeature = layer.Type == GeoJSONObjectType.Feature;
@@ -89,7 +89,7 @@ namespace TurfCS
 				CoordEach(geometryMaybeCollection, callback, excludeWrapCoord);
 			}
 		}
-		static private void CoordEach(IGeometryObject layer, Action<GeographicPosition> callback, bool excludeWrapCoord = false)
+		static private void CoordEach(IGeometryObject layer, Action<Position> callback, bool excludeWrapCoord = false)
 		{
 			var isGeometryCollection = layer.Type == GeoJSONObjectType.GeometryCollection;
 			var stopG = isGeometryCollection ? ((GeometryCollection)layer).Geometries.Count : 1;
@@ -105,14 +105,14 @@ namespace TurfCS
 
 				if (geometry.Type == GeoJSONObjectType.Point)
 				{
-					callback((GeographicPosition)((Point)layer).Coordinates);
+					callback((Position)((Point)layer).Coordinates);
 				}
 				else if (geometry.Type == GeoJSONObjectType.LineString || geometry.Type == GeoJSONObjectType.MultiPoint)
 				{
 					var coords = geometry.Type == GeoJSONObjectType.LineString ?
 										 ((LineString)layer).Coordinates :
 										 ((MultiPoint)layer).Coordinates.Select(x => x.Coordinates).ToList();
-					for (var j = 0; j < coords.Count; j++) callback((GeographicPosition)coords[j]);
+					for (var j = 0; j < coords.Count; j++) callback((Position)coords[j]);
 				}
 				else if (geometry.Type == GeoJSONObjectType.Polygon || geometry.Type == GeoJSONObjectType.MultiLineString)
 				{
@@ -122,7 +122,7 @@ namespace TurfCS
 					{
 						var coords2 = coords1[j].Coordinates;
 						for (var k = 0; k < coords2.Count - wrapShrink; k++)
-							callback((GeographicPosition)coords2[k]);
+							callback((Position)coords2[k]);
 					}
 				}
 				else if (geometry.Type == GeoJSONObjectType.MultiPolygon)
@@ -135,7 +135,7 @@ namespace TurfCS
 						{
 							var coords3 = coords2[k].Coordinates;
 							for (var l = 0; l < coords3.Count - wrapShrink; l++)
-								callback((GeographicPosition)coords3[l]);
+								callback((Position)coords3[l]);
 						}
 					}
 				}
@@ -164,11 +164,11 @@ namespace TurfCS
 		 * the final coordinate of LinearRings that wraps the ring in its iteration.
 		 * @returns {*} combined value
 		 */
-		static public object CoordReduce(IGeoJSONObject layer, Func<object, GeographicPosition, object> callback,
+		static public object CoordReduce(IGeoJSONObject layer, Func<object, Position, object> callback,
 										 object memo, bool excludeWrapCoord = false)
 		{
 			object ret = memo;
-			Action<GeographicPosition> internal_cb = (GeographicPosition coord) => {
+			Action<Position> internal_cb = (Position coord) => {
 				ret = callback(ret, coord);
 			};
 			CoordEach(layer, internal_cb, excludeWrapCoord);
