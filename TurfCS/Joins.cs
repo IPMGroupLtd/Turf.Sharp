@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GeoJSON.Net;
 using GeoJSON.Net.Feature;
 using GeoJSON.Net.Geometry;
+using System.Linq;
 
 namespace TurfCS
 {
@@ -36,7 +37,7 @@ namespace TurfCS
 			if (type == GeoJSONObjectType.Polygon)
 				return Inside_(Turf.GetCoord(point), new List<Polygon>() { (Polygon)poly.Geometry });
 			else if (type == GeoJSONObjectType.MultiPolygon)
-				return Inside_(Turf.GetCoord(point), ((MultiPolygon)poly.Geometry).Coordinates);
+				return Inside_(GetCoord(point), ((MultiPolygon)poly.Geometry).Coordinates.ToList());
 			else
 				throw new Exception("2nd argument must be Polygon or MultiPolygon");
 		}
