@@ -43,7 +43,7 @@ namespace TurfCS
 		public static FeatureCollection Explode(IGeoJSONObject geojson)
 		{
 			var points = new List<Feature>();
-			CoordEach(geojson,(GeographicPosition coord) => {
+			CoordEach(geojson,(Position coord) => {
 				points.Add(Turf.Point(coord));
 			});
 			return new FeatureCollection(points);
