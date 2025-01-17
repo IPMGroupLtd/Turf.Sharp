@@ -110,7 +110,7 @@ namespace TurfCS
 				else if (geometry.Type == GeoJSONObjectType.LineString || geometry.Type == GeoJSONObjectType.MultiPoint)
 				{
 					var coords = geometry.Type == GeoJSONObjectType.LineString ?
-										 ((LineString)layer).Coordinates :
+										 ((LineString)layer).Coordinates.ToList() :
 										 ((MultiPoint)layer).Coordinates.Select(x => x.Coordinates).ToList();
 					for (var j = 0; j < coords.Count; j++) callback((Position)coords[j]);
 				}
@@ -194,12 +194,12 @@ namespace TurfCS
 			{
 				for (var i = 0; i < ((FeatureCollection)layer).Features.Count; i++)
 				{
-					callback(((FeatureCollection)layer).Features[i].Properties, i);
+					callback((Dictionary<string, object>)((FeatureCollection)layer).Features[i].Properties, i);
 				}
 			}
 			else if (layer.Type == GeoJSONObjectType.Feature)
 			{
-				callback(((Feature)layer).Properties, 0);
+				callback((Dictionary<string, object>)((Feature)layer).Properties, 0);
 			}
 			else {
 				throw new Exception("Feature or FeatureCollection must be given");

@@ -564,7 +564,7 @@ namespace TurfCS
 
 			if (geometry.Type == GeoJSONObjectType.LineString)
 			{
-				return Length(((LineString)geometry).Coordinates, units);
+				return Length(((LineString)geometry).Coordinates.ToList(), units);
 			}
 			else if (geometry.Type == GeoJSONObjectType.Polygon || geometry.Type == GeoJSONObjectType.MultiLineString)
 			{
@@ -574,7 +574,7 @@ namespace TurfCS
 				for (var i = 0; i < lines.Count; i++)
 				{
 					var points = ((LineString)lines[i]).Coordinates;
-					d += Length(points, units);
+					d += Length(points.ToList(), units);
 				}
 				return d;
 			}
@@ -588,7 +588,7 @@ namespace TurfCS
 					for (var j = 0; j < lines.Count; j++)
 					{
 						var points = ((LineString)lines[j]).Coordinates;
-						d += Length(points, units);
+						d += Length(points.ToList(), units);
 					}
 				}
 				return d;

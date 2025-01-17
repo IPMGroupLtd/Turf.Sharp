@@ -97,7 +97,7 @@ namespace TurfCS
 			//break down points
 			var vertices = points.Features.Select(x => {
 				var point = (Point)x.Geometry;
-				var pos = (GeographicPosition)point.Coordinates;
+				var pos = (Position)point.Coordinates;
 				object zval = null;
 				if (z != null) x.Properties.TryGetValue(z, out zval);
 				return new Vertix( pos.Longitude, pos.Latitude, zval );
@@ -110,10 +110,10 @@ namespace TurfCS
 				return new Feature(
 					new Polygon(new List<LineString>() {
 						new LineString(new List<IPosition>() {
-							new GeographicPosition(x.A.Y, x.A.X),
-							new GeographicPosition(x.B.Y, x.B.X),
-							new GeographicPosition(x.C.Y, x.C.X),
-							new GeographicPosition(x.A.Y, x.A.X)
+							new Position(x.A.Y, x.A.X),
+							new Position(x.B.Y, x.B.X),
+							new Position(x.C.Y, x.C.X),
+							new Position(x.A.Y, x.A.X)
 						})
 					}),
 					new Dictionary<string, object>(){
