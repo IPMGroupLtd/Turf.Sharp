@@ -330,10 +330,10 @@ namespace TurfCS
 		 */
 		public static Feature BboxPolygon(List<double>bbox)
 		{
-			var lowLeft = new GeographicPosition(bbox[1], bbox[0]);
-			var topLeft = new GeographicPosition(bbox[3], bbox[0]);
-			var topRight = new GeographicPosition(bbox[3], bbox[2]);
-			var lowRight = new GeographicPosition(bbox[1], bbox[2]);
+			var lowLeft = new Position(bbox[1], bbox[0]);
+			var topLeft = new Position(bbox[3], bbox[0]);
+			var topRight = new Position(bbox[3], bbox[2]);
+			var lowRight = new Position(bbox[1], bbox[2]);
 
 			var poly = new Polygon(new List<LineString> () {
 				new LineString(new List<IPosition> {
