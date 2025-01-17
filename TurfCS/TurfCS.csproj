@@ -2,9 +2,13 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <RootNamespace>TurfCS</RootNamespace>
-    <AssemblyName>TurfCS</AssemblyName>
-    <LangVersion>latest</LangVersion>
+    <RootNamespace>Turf</RootNamespace>
+    <Description>Your project description here.</Description>
+    <Company>Ko-hei OHTSUKA</Company>
+    <Product>Turf</Product>
+    <Version>1.0.0</Version>
+    <Authors>Ko-hei OHTSUKA</Authors>
+    <Copyright>(c) Ko-hei OHTSUKA</Copyright>
   </PropertyGroup>
 
 
