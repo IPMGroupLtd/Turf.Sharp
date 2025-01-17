@@ -91,8 +91,8 @@ namespace TurfCS
 			int i = 0;
 			for (int j = points.Count - 1; i < points.Count; j = i++)
 			{
-				var pointi = (GeographicPosition)points[i];
-				var pointj = (GeographicPosition)points[j];
+				var pointi = (Position )points[i];
+				var pointj = (Position )points[j];
 				var xi = pointi.Longitude;
 				var yi = pointi.Latitude;
 				var xj = pointj.Longitude;
