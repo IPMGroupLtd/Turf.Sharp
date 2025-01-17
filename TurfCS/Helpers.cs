@@ -23,12 +23,12 @@ namespace TurfCS
 		public static Feature Point(double[] coordinates, Dictionary<string,object> properties = null)
 		{
 			if (coordinates.Length < 2) throw new Exception("Coordinates must be at least 2 numbers long");
-			return Point(new GeographicPosition(coordinates[1], coordinates[0]),properties);
+			return Point(new Position(coordinates[1], coordinates[0]),properties);
 		}
 		public static Feature Point(List<double> coordinates, Dictionary<string, object> properties = null)
 		{
 			if (coordinates.Count < 2) throw new Exception("Coordinates must be at least 2 numbers long");
-			return Point(new GeographicPosition(coordinates[1], coordinates[0]), properties);
+			return Point(new Position(coordinates[1], coordinates[0]), properties);
 		}
 		public static Feature Point(IPosition coordinates, Dictionary<string, object> properties = null)
 		{
